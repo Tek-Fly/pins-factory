@@ -1,0 +1,13 @@
+[project]
+language = "typescript"
+style = "minimal"
+test_command = "pnpm -w lint && pnpm -w typecheck"
+
+[behavior]
+small_prs = true
+prefer_existing_patterns = true
+avoid_unnecessary_dependencies = true
+
+[security]
+never_expose_secrets = true
+server_only_env = ["DATABASE_URL", "CLERK_SECRET_KEY", "BLOB_READ_WRITE_TOKEN", "SHOPIFY_ADMIN_ACCESS_TOKEN", "RUNCOMFY_API_KEY"]
