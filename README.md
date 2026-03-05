@@ -1,25 +1,23 @@
 # pins-factory
 pins-factory
 
-# AGENTS.md — Pinterest Factory (Gift Getta) Internal App
+# Pinterest Factory (Gift Getta) — Private Internal App
 
-## Non-negotiables
-- Keep PRs small and scoped to the requested phase only.
-- Do not add Pinterest API automation in Phase 0–5 (we start with CSV outputs).
-- No Canva API usage.
-- All secrets remain server-only. Never use NEXT_PUBLIC_* for secrets.
-- Use Vercel Postgres + Prisma and Vercel Blob for assets.
-- Use Clerk for auth; restrict dashboard + APIs to a single allowlisted email.
+Internal tool to automate Pinterest asset creation for Shopify POD mugs.
 
-## CRITICAL: Bleeding-Edge Standards (Next.js 16, Clerk Core 3, Vercel Blob)
-- **Next.js 16:** Uses `proxy.ts` at the root, NOT `middleware.ts`. You MUST name the file `proxy.ts` and export `clerkMiddleware()` from it. Require Node 20.9+.
-- **Clerk Core 3:** The old components are gone. You MUST use the new `<Show when="signed-in">` and `<Show when="signed-out">` components from `@clerk/nextjs`.
-- **Vercel Blob:** Install `@vercel/blob`. Use the `put()` method for server-side uploads exactly as shown in the Vercel Blob App Router quickstart.
+## Stack
+- Next.js 16 (App Router) + TypeScript
+- Clerk Auth (Core 3)
+- Prisma + Vercel Postgres
+- Vercel Blob
 
-## Phase workflow
-Phase 0: scaffold only (auth, db, blob, ui shell).
-Phase 1: shopify product sync.
-Phase 2: copy generation.
-Phase 3: runcomfy mockups.
-Phase 4: canva pack builder.
-Phase 5: ingest canva export + pinterest CSV.
+## Local Setup
+Create `apps/web/.env.local` and add:
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+APP_BASE_URL=http://localhost:3000
+AUTH_ALLOWED_EMAIL=you@domain.com
+DATABASE_URL=
+BLOB_READ_WRITE_TOKEN=
+
+Security: `proxy.ts` (Next.js 16) handles Clerk middleware.
